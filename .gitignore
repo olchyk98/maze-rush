@@ -59,6 +59,6 @@ sysinfo.txt
 crashlytics-build.properties
 
 # IDEs & Junk
-.idea/
+*.idea/
 .collabignore/
 .DS_Store/
