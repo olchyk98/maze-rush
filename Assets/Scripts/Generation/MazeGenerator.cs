@@ -15,9 +15,16 @@ namespace Generation
             _grid = InstantiateGrid();
         }
 
+        /// <summary>
+        /// Fills grid with the cell instances.
+        /// </summary>
+        /// <returns>
+        /// 2D array maze matrix with newly summoned cell instances.
+        /// </returns>
         private GeneratorCell[,] InstantiateGrid()
         {
            GeneratorCell[,] grid = new GeneratorCell[_mazeHeight, _mazeWidth];
+           
            for (var y = 0; y < _mazeHeight; ++y)
            {
                for (var x = 0; x < _mazeWidth; ++x)
@@ -29,6 +36,12 @@ namespace Generation
            return grid;
         }
 
+        /// <summary>
+        /// Uses the predictable Sidewinder Algorithm to generate a new maze matrix.
+        /// </summary>
+        /// <returns>
+        /// 2D array of the maze matrix.
+        /// </returns>
         public GeneratorCell[,] GenerateCells() {
             for (var y = 0; y < _mazeHeight; ++y)
             {
