@@ -55,7 +55,7 @@ namespace Generation
                         _grid[y, targetX].borderedN = false;
                         _grid[y - 1, targetX].borderedS = false;
 
-                        runStart = x + 1; // TODO: Optimize
+                        runStart = x + 1; // @todo Optimize
                     } else if (x + 1 < _mazeWidth)
                     {
                         _grid[y, x].borderedE = false;
