@@ -7,7 +7,7 @@ namespace Generation
     {
         [SerializeField] private GameObject cellPrefab;
         
-        // TODO: Matrix Dimensions should be placed in the inspector.
+        // @todo Matrix Dimensions should be placed in the inspector.
         // WARNING: Minimum value is 5.
         private readonly int _matrixWidth = 10;
         // WARNING: Minimum value is 5.
@@ -63,7 +63,7 @@ namespace Generation
         private GameObject InstantiateCell(GeneratorCell cellData)
         {
             var cell = InstantiateVoidCell();
-            // TODO: The method call should be memoized. That way we could avoid object referencing or memory leaks.
+            // @todo The method call should be memoized. That way we could avoid object referencing or memory leaks.
             var size = GetCellSize(cell);
 
             cell.transform.position = new Vector3(
