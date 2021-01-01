@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @PlayerActionControls : IInputActionCollection, IDisposable
+namespace Controls.Player
 {
-    public InputActionAsset asset { get; }
-    public @PlayerActionControls()
+    public class @PlayerActionControls : IInputActionCollection, IDisposable
     {
-        asset = InputActionAsset.FromJson(@"{
+        public InputActionAsset asset { get; }
+        public @PlayerActionControls()
+        {
+            asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
@@ -286,154 +288,155 @@ public class @PlayerActionControls : IInputActionCollection, IDisposable
         }
     ]
 }");
+            // Gameplay
+            m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+            m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+            m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+            m_Gameplay_Use = m_Gameplay.FindAction("Use", throwIfNotFound: true);
+        }
+
+        public void Dispose()
+        {
+            UnityEngine.Object.Destroy(asset);
+        }
+
+        public InputBinding? bindingMask
+        {
+            get => asset.bindingMask;
+            set => asset.bindingMask = value;
+        }
+
+        public ReadOnlyArray<InputDevice>? devices
+        {
+            get => asset.devices;
+            set => asset.devices = value;
+        }
+
+        public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
+
+        public bool Contains(InputAction action)
+        {
+            return asset.Contains(action);
+        }
+
+        public IEnumerator<InputAction> GetEnumerator()
+        {
+            return asset.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Enable()
+        {
+            asset.Enable();
+        }
+
+        public void Disable()
+        {
+            asset.Disable();
+        }
+
         // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
-        m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
-        m_Gameplay_Use = m_Gameplay.FindAction("Use", throwIfNotFound: true);
-    }
-
-    public void Dispose()
-    {
-        UnityEngine.Object.Destroy(asset);
-    }
-
-    public InputBinding? bindingMask
-    {
-        get => asset.bindingMask;
-        set => asset.bindingMask = value;
-    }
-
-    public ReadOnlyArray<InputDevice>? devices
-    {
-        get => asset.devices;
-        set => asset.devices = value;
-    }
-
-    public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
-
-    public bool Contains(InputAction action)
-    {
-        return asset.Contains(action);
-    }
-
-    public IEnumerator<InputAction> GetEnumerator()
-    {
-        return asset.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    public void Enable()
-    {
-        asset.Enable();
-    }
-
-    public void Disable()
-    {
-        asset.Disable();
-    }
-
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_Move;
-    private readonly InputAction m_Gameplay_Look;
-    private readonly InputAction m_Gameplay_Use;
-    public struct GameplayActions
-    {
-        private @PlayerActionControls m_Wrapper;
-        public GameplayActions(@PlayerActionControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Gameplay_Move;
-        public InputAction @Look => m_Wrapper.m_Gameplay_Look;
-        public InputAction @Use => m_Wrapper.m_Gameplay_Use;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void SetCallbacks(IGameplayActions instance)
+        private readonly InputActionMap m_Gameplay;
+        private IGameplayActions m_GameplayActionsCallbackInterface;
+        private readonly InputAction m_Gameplay_Move;
+        private readonly InputAction m_Gameplay_Look;
+        private readonly InputAction m_Gameplay_Use;
+        public struct GameplayActions
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
+            private @PlayerActionControls m_Wrapper;
+            public GameplayActions(@PlayerActionControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+            public InputAction @Look => m_Wrapper.m_Gameplay_Look;
+            public InputAction @Use => m_Wrapper.m_Gameplay_Use;
+            public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+            public void SetCallbacks(IGameplayActions instance)
             {
-                @Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
-                @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                @Use.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
-                @Use.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
-                @Use.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
-            }
-            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
-                @Look.started += instance.OnLook;
-                @Look.performed += instance.OnLook;
-                @Look.canceled += instance.OnLook;
-                @Use.started += instance.OnUse;
-                @Use.performed += instance.OnUse;
-                @Use.canceled += instance.OnUse;
+                if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
+                {
+                    @Move.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Move.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Move.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMove;
+                    @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
+                    @Use.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
+                    @Use.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
+                    @Use.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnUse;
+                }
+                m_Wrapper.m_GameplayActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @Move.started += instance.OnMove;
+                    @Move.performed += instance.OnMove;
+                    @Move.canceled += instance.OnMove;
+                    @Look.started += instance.OnLook;
+                    @Look.performed += instance.OnLook;
+                    @Look.canceled += instance.OnLook;
+                    @Use.started += instance.OnUse;
+                    @Use.performed += instance.OnUse;
+                    @Use.canceled += instance.OnUse;
+                }
             }
         }
-    }
-    public GameplayActions @Gameplay => new GameplayActions(this);
-    private int m_KeyboardMouseSchemeIndex = -1;
-    public InputControlScheme KeyboardMouseScheme
-    {
-        get
+        public GameplayActions @Gameplay => new GameplayActions(this);
+        private int m_KeyboardMouseSchemeIndex = -1;
+        public InputControlScheme KeyboardMouseScheme
         {
-            if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
-            return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            get
+            {
+                if (m_KeyboardMouseSchemeIndex == -1) m_KeyboardMouseSchemeIndex = asset.FindControlSchemeIndex("Keyboard&Mouse");
+                return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
+            }
         }
-    }
-    private int m_GamepadSchemeIndex = -1;
-    public InputControlScheme GamepadScheme
-    {
-        get
+        private int m_GamepadSchemeIndex = -1;
+        public InputControlScheme GamepadScheme
         {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
+            get
+            {
+                if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+                return asset.controlSchemes[m_GamepadSchemeIndex];
+            }
         }
-    }
-    private int m_TouchSchemeIndex = -1;
-    public InputControlScheme TouchScheme
-    {
-        get
+        private int m_TouchSchemeIndex = -1;
+        public InputControlScheme TouchScheme
         {
-            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
-            return asset.controlSchemes[m_TouchSchemeIndex];
+            get
+            {
+                if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
+                return asset.controlSchemes[m_TouchSchemeIndex];
+            }
         }
-    }
-    private int m_JoystickSchemeIndex = -1;
-    public InputControlScheme JoystickScheme
-    {
-        get
+        private int m_JoystickSchemeIndex = -1;
+        public InputControlScheme JoystickScheme
         {
-            if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
-            return asset.controlSchemes[m_JoystickSchemeIndex];
+            get
+            {
+                if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
+                return asset.controlSchemes[m_JoystickSchemeIndex];
+            }
         }
-    }
-    private int m_XRSchemeIndex = -1;
-    public InputControlScheme XRScheme
-    {
-        get
+        private int m_XRSchemeIndex = -1;
+        public InputControlScheme XRScheme
         {
-            if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
-            return asset.controlSchemes[m_XRSchemeIndex];
+            get
+            {
+                if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
+                return asset.controlSchemes[m_XRSchemeIndex];
+            }
         }
-    }
-    public interface IGameplayActions
-    {
-        void OnMove(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
-        void OnUse(InputAction.CallbackContext context);
+        public interface IGameplayActions
+        {
+            void OnMove(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
+            void OnUse(InputAction.CallbackContext context);
+        }
     }
 }
