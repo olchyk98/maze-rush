@@ -135,7 +135,7 @@ namespace Generation
 
             return new Vector3(
                 cellSize.x * matrixPosition.x + cellSize.x / 2, 
-                cellSize.y / 2, 
+                .5f,
                 cellSize.z * matrixPosition.y
             );
         }
