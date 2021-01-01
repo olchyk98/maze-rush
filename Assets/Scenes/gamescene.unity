@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 131.07285, g: 162.31519, b: 214.7089, a: 1}
+  m_IndirectSpecularColor: {r: 187.24184, g: 191.53194, b: 214.28427, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: a123fc0ac58cb774e8592c925f167e7c, type: 2}
   m_StaticLightingSkyUniqueID: 1
-  m_SkySettings: {fileID: 535660038}
+  m_SkySettings: {fileID: 653403361}
   m_SkySettingsFromProfile: {fileID: -1658960478407648048, guid: a123fc0ac58cb774e8592c925f167e7c,
     type: 2}
 --- !u!4 &313761475
@@ -170,7 +170,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &535660038
+--- !u!114 &653403361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,10 +191,10 @@ MonoBehaviour:
     max: 360
   skyIntensityMode:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 2
   exposure:
     m_OverrideState: 0
-    m_Value: 10
+    m_Value: 0
   multiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -208,7 +208,7 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0, z: 0}
   desiredLuxValue:
     m_OverrideState: 0
-    m_Value: 20000
+    m_Value: 1
   updateMode:
     m_OverrideState: 0
     m_Value: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
     m_Value: 0
   hdriSky:
     m_OverrideState: 0
-    m_Value: {fileID: 8900000, guid: 54a3a0570aebe8949bec4966f1376581, type: 3}
+    m_Value: {fileID: 8900000, guid: f87447f4c3970e2409d959b91b49c574, type: 3}
   enableBackplate:
     m_OverrideState: 0
     m_Value: 0
@@ -378,6 +378,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2095767848
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1677329360291585156, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_Name
+      value: zombie Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000006657903
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021204213718255166, guid: 630483b84764144d59047bd3380b9b22,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 630483b84764144d59047bd3380b9b22, type: 3}
 --- !u!1 &2140262788
 GameObject:
   m_ObjectHideFlags: 19
