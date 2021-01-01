@@ -1,33 +1,36 @@
 using Entities;
-using UnityEngine;
 using Generation;
+using UnityEngine;
 
-[RequireComponent(typeof(MazeParent))]
-[RequireComponent(typeof(EntitiesParent))]
-public class LevelParent : MonoBehaviour
+namespace Process
 {
-    private MazeParent _mazeParent;
-    private EntitiesParent _entitiesParent;
-    
-    private void Start()
+    [RequireComponent(typeof(MazeParent))]
+    [RequireComponent(typeof(EntitiesParent))]
+    public class LevelParent : MonoBehaviour
     {
-        _mazeParent = GetComponent<MazeParent>();
-        _entitiesParent = GetComponent<EntitiesParent>();
-        
-        InitializeLevel();
-    }
+        private MazeParent _mazeParent;
+        private EntitiesParent _entitiesParent;
     
-    /// <summary>
-    /// Generates a new maze, places player into it
-    /// and adjusts the environment with monsters and items. 
-    /// </summary>
-    private void InitializeLevel() {
-        _mazeParent.SpawnMaze();
-        var keyPositions = _mazeParent.ConstructKeyPositions();
+        private void Start()
+        {
+            _mazeParent = GetComponent<MazeParent>();
+            _entitiesParent = GetComponent<EntitiesParent>();
         
-        _entitiesParent.SpawnExit(keyPositions.Exit);
-        _entitiesParent.SpawnPlayer(keyPositions.Player);
-        _entitiesParent.SpawnItems(keyPositions.Items);
-        _entitiesParent.SpawnMonsters(keyPositions.Monsters);
+            InitializeLevel();
+        }
+    
+        /// <summary>
+        /// Generates a new maze, places player into it
+        /// and adjusts the environment with monsters and items. 
+        /// </summary>
+        private void InitializeLevel() {
+            _mazeParent.SpawnMaze();
+            var keyPositions = _mazeParent.ConstructKeyPositions();
+        
+            _entitiesParent.SpawnExit(keyPositions.Exit);
+            _entitiesParent.SpawnPlayer(keyPositions.Player);
+            _entitiesParent.SpawnItems(keyPositions.Items);
+            _entitiesParent.SpawnMonsters(keyPositions.Monsters);
+        }
     }
 }
