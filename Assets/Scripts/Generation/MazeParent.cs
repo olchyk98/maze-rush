@@ -6,13 +6,13 @@ namespace Generation
     public class MazeParent : MonoBehaviour
     {
         [SerializeField] private GameObject cellPrefab;
-        
+
         // @todo Matrix Dimensions should be placed in the inspector.
         // WARNING: Minimum value is 5.
         private readonly int _matrixWidth = 10;
         // WARNING: Minimum value is 5.
         private readonly int _matrixHeight = 10;
-        
+
         /// <summary>
         /// High Level method that instantiates a new instance of the mazeMatrixGenerator
         /// and produces a new maze matrix.
@@ -22,8 +22,8 @@ namespace Generation
         /// </returns>
         private GeneratorCell[,] GenerateMaze()
         {
-           MazeGenerator generator = new MazeGenerator(_matrixWidth, _matrixHeight);
-           return generator.GenerateCells();
+            MazeGenerator generator = new MazeGenerator(_matrixWidth, _matrixHeight);
+            return generator.GenerateCells();
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Generation
         {
             Cell cellWalls = cell.GetComponent<Cell>();
 
-            if (!cellData.borderedN) Destroy(cellWalls.WallN);
-            if (!cellData.borderedE) Destroy(cellWalls.WallE);
-            if (!cellData.borderedS) Destroy(cellWalls.WallS);
-            if (!cellData.borderedW) Destroy(cellWalls.WallW);
+            if (!cellData.borderedN) DestroyImmediate(cellWalls.WallN);
+            if (!cellData.borderedE) DestroyImmediate(cellWalls.WallE);
+            if (!cellData.borderedS) DestroyImmediate(cellWalls.WallS);
+            if (!cellData.borderedW) DestroyImmediate(cellWalls.WallW);
         }
 
         /// <summary>
@@ -110,13 +110,13 @@ namespace Generation
             var targetCell = (directCell == default)
                 ? InstantiateVoidCell()
                 : directCell;
-            
+
             var size = targetCell.GetComponent<Collider>().bounds.size;
 
             // Default cell should be deleted after usage, since
             // we don't want to have any extra cells in the world.
-            if(directCell == default) Destroy(targetCell);
-            
+            if (directCell == default) DestroyImmediate(targetCell);
+
             return size;
         }
 
@@ -133,11 +133,32 @@ namespace Generation
         {
             var cellSize = GetCellSize();
 
+            var x = (int) matrixPosition.x;
+            var y = (int) matrixPosition.y;
+
             return new Vector3(
-                cellSize.x * matrixPosition.x + cellSize.x / 2, 
+                cellSize.x * matrixPosition.x + cellSize.x / 2,
                 .5f,
                 cellSize.z * matrixPosition.y
             );
+        }
+
+        /// <summary>
+        /// Generates a random position in the matrix.
+        /// </summary>
+        /// <returns>
+        /// Position of the generated cell in the matrix.
+        /// </returns>
+        private Vector3 RandomizePosition(Vector2Int startPositionDefault = default)
+        {
+            var startPosition = (startPositionDefault == default)
+                ? new Vector2(0, 0)
+                : startPositionDefault;
+
+            return GetCellPositionAt(new Vector2Int(
+                Random.Range((int) startPosition.x, _matrixWidth),
+                Random.Range((int) startPosition.y, _matrixHeight)
+            ));
         }
 
         /// <summary>
@@ -152,31 +173,11 @@ namespace Generation
 
             for (var ma = 0; ma < count; ++ma)
             {
-                var matrixPosition = new Vector2(
-                    Random.Range(skipX, _matrixWidth), 
-                    Random.Range(skipY, _matrixHeight)
-                );
-                
-                positions.Add(GetCellPositionAt(matrixPosition));
+                var position = RandomizePosition(new Vector2Int(skipX, skipY));
+                positions.Add(position);
             }
 
             return positions;
-        }
-
-        /// <returns>
-        /// Returns randomized monster positions.
-        /// </returns>
-        private IList<Vector3> RandomizeMonsterPositions()
-        {
-            return RandomizeMultiplePositions(Random.Range(4, 9), 0, 4);
-        }
-
-        /// <returns>
-        /// Returns randomized item positions.
-        /// </returns>
-        private IList<Vector3> RandomizeItemPositions()
-        {
-            return RandomizeMultiplePositions(Random.Range(1, 4), 0, 4);
         }
 
         /// <summary>
@@ -187,14 +188,27 @@ namespace Generation
         /// </returns>
         public MazeKeyPositions ConstructKeyPositions()
         {
+            var cellSize = GetCellSize();
+
             var player = GetCellPositionAt(Vector2.zero);
-            var exit = GetCellPositionAt(new Vector2(_matrixWidth - 1, _matrixHeight - 1));
-            IList<Vector3> monsters = RandomizeMonsterPositions();
-            IList<Vector3> items = RandomizeItemPositions();
-            
-            return new MazeKeyPositions(player, exit, items, monsters);
+            var exit = GetCellPositionAt(new Vector2Int(_matrixWidth - 1, _matrixHeight - 1));
+            var start = Vector3.zero;
+            var end = new Vector3(_matrixWidth * cellSize.x, _matrixHeight * cellSize.y);
+            var hunter = RandomizePosition(new Vector2Int(0, 2));
+            IList<Vector3> items = RandomizeMultiplePositions(Random.Range(1, 4), 0, 4);
+
+            var positionsStorage = new MazeKeyPositions(
+                player: player,
+                exit: exit,
+                items: items,
+                hunter: hunter,
+                mazeStart: start,
+                mazeEnd: end
+            );
+
+            return positionsStorage;
         }
-        
+
         /// <summary>
         /// Generates and Instantiates maze in the world.
         /// </summary>

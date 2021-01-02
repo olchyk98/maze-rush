@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b122476b7a48508dbbed7fca02ac47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellPrefab: {fileID: 5415440132217440161, guid: bd2668dc7e8b745329e59dcdf2eb33b0,
+  cellPrefab: {fileID: 5415440132217440161, guid: b26714efa4ce04b37a1bd630a15d4186,
     type: 3}
 --- !u!114 &4817654833694157012
 MonoBehaviour:
@@ -61,10 +61,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5584163498423608006, guid: 07a498e10db2445a5aba7e4cd128f803,
     type: 3}
-  exitPrefab: {fileID: 6070833866375551466, guid: 3e1e9f113fd9c41d784fb660fc0b0fe8,
+  exitPrefab: {fileID: 1397415647500021772, guid: d7ce4ef74bc1b49a49b4bd5d51e1dabf,
     type: 3}
   itemPrefab: {fileID: 0}
-  monsterPrefab: {fileID: 0}
+  hunterPrefab: {fileID: 1677329360291585156, guid: 630483b84764144d59047bd3380b9b22,
+    type: 3}
 --- !u!114 &4817654833694157015
 MonoBehaviour:
   m_ObjectHideFlags: 0
