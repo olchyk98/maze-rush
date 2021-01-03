@@ -1,6 +1,8 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using Hunter;
 using Pathfinding;
+using Generation;
 
 namespace Entities
 {
@@ -14,36 +16,41 @@ namespace Entities
 
         private Transform _transform;
 
-        private void Start() {
+        private void Start()
+        {
             _transform = GetComponent<Transform>();
         }
 
-        public void SpawnPlayer(Vector3 position)
+        public void SpawnPlayer(MazeKeyPositions positions)
         {
-            Instantiate(playerPrefab, position, Quaternion.identity);
+            Instantiate(playerPrefab, positions.Player, Quaternion.identity);
         }
 
-        public void SpawnExit(Vector3 position)
+        public void SpawnExit(MazeKeyPositions positions)
         {
-            Instantiate(exitPrefab, position, Quaternion.identity);
+            Instantiate(exitPrefab, positions.Exit, Quaternion.identity);
         }
 
-        public void SpawnItems(IList<Vector3> positions)
+        public void SpawnItems(MazeKeyPositions positions)
         {
-            Instantiate(itemPrefab, positions[0], Quaternion.identity);
+            Instantiate(itemPrefab, positions.Items[0], Quaternion.identity);
         }
 
-        public void SpawnHunter(Vector3 position) {
-            Instantiate(hunterPrefab, position, Quaternion.identity);
-        } 
+        public void SpawnHunter(MazeKeyPositions positions)
+        {
+            var hunter = Instantiate(hunterPrefab, positions.Hunter, Quaternion.identity);
+            hunter.GetComponent<HunterMovement>().UpdateMazeSizeCache(positions.MazeEnd);
+        }
 
-        private System.Collections.IEnumerator BakeMeshOnUpdate(GameObject navField) {
+        private IEnumerator BakeMeshOnUpdate(GameObject navField)
+        {
             yield return 0;
 
             navField.GetComponent<AstarPath>().Scan();
         }
 
-        public void SpawnNavField() {
+        public void SpawnNavField(MazeKeyPositions positions)
+        {
             var navField = Instantiate(navFieldPrefab);
             StartCoroutine(BakeMeshOnUpdate(navField));
         }

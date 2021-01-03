@@ -35,11 +35,11 @@ namespace Process
         private void InitializeEntities() {
             var keyPositions = _mazeParent.ConstructKeyPositions();
 
-            _entitiesParent.SpawnExit(keyPositions.Exit);
-            _entitiesParent.SpawnPlayer(keyPositions.Player);
-            _entitiesParent.SpawnItems(keyPositions.Items);
-            _entitiesParent.SpawnHunter(keyPositions.Hunter);
-            _entitiesParent.SpawnNavField();
+            _entitiesParent.SpawnExit(keyPositions);
+            _entitiesParent.SpawnPlayer(keyPositions);
+            _entitiesParent.SpawnItems(keyPositions);
+            _entitiesParent.SpawnHunter(keyPositions);
+            _entitiesParent.SpawnNavField(keyPositions);
         }
     }
 }
