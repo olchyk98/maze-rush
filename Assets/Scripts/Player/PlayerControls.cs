@@ -10,8 +10,8 @@ namespace Player
         [Range(.25f, 10f)] [SerializeField] private float nearUseRange;
 
         private Transform _transform;
-        
-        public UnityAction<Vector3> OnMove;
+
+        public UnityAction<Vector3, bool> OnMove;
         public UnityAction<Vector2> OnLook;
         public UnityAction<GameObject> OnNearUse;
 
@@ -19,22 +19,23 @@ namespace Player
         {
             _transform = GetComponent<Transform>();
         }
-        
+
         private void FixedUpdate()
         {
             HandleMoveTick();
             HandleLookTick();
             HandleNearUseTick();
         }
-        
+
         private void HandleMoveTick()
         {
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
+            bool isShifting = Input.GetKeyDown(KeyCode.LeftShift);
 
             if (x != 0 || y != 0)
             {
-                OnMove?.Invoke(new Vector3(x, 0, y));
+                OnMove?.Invoke(new Vector3(x, 0, y), isShifting);
             }
         }
 

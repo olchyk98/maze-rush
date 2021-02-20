@@ -1,6 +1,7 @@
 ﻿using Pathfinding;
 using UnityEngine;
 using Universal;
+using Player;
 
 namespace Hunter
 {
@@ -18,15 +19,18 @@ namespace Hunter
     {
         private Seeker _seeker;
         private AIPath _aipath;
-        private GameObject _target;
         private Transform _transform;
+
+        private GameObject _target;
+        private Transform _targetTransform;
+        private PlayerController _targetController;
 
         private Vector3 _cachedMazeSize = Vector3.zero;
 
-        [SerializeField] [Range(.5f, 10f)] private float minSpeed;
-        [SerializeField] [Range(2f, 20f)] private float maxSpeed;
-
-        // @todo: Target.OnMakingNoise += SearchTarget();
+        [SerializeField] [Range(.5f, 10f)] private float _minSpeed;
+        [SerializeField] [Range(2f, 20f)] private float _maxSpeed;
+        [SerializeField] [Range(.1f, 5f)] private float _attackDistance;
+        [SerializeField] private LayerMask _eyesIgnore;
 
         private HunterActivity _activity = HunterActivity.WAITING;
 
@@ -34,8 +38,13 @@ namespace Hunter
         {
             _seeker = GetComponent<Seeker>();
             _aipath = GetComponent<AIPath>();
-            _target = GetComponent<PlayerFinder>().FindPlayer();
             _transform = GetComponent<Transform>();
+
+            _target = GetComponent<PlayerFinder>().FindPlayer();
+            _targetTransform = _target.GetComponent<Transform>();
+            _targetController = _target.GetComponent<PlayerController>();
+
+            _targetController.OnMove += HandleTargetMove;
         }
 
         private void Update()
@@ -45,6 +54,7 @@ namespace Hunter
 
         private void ScheduleBehaviour()
         {
+            // TODO: Rewrite the scheme using the StateMachine pattern.
             if (CheckIfTargetInViewport())
             {
                 if (CheckIfNearTarget())
@@ -58,7 +68,15 @@ namespace Hunter
             }
             else
             {
-                InvestigateMaze();
+                // TODO: CONTINUE -> if FOLLOWING in the else block -> stop following and start investigating
+                if(_activity.Equals(HunterActivity.FOLLOWING))
+                {
+                    // TODO: Change if condition and here -> stop following and start investigating
+                }
+                else
+                {
+                    InvestigateMaze();
+                }
             }
         }
 
@@ -74,8 +92,8 @@ namespace Hunter
                 Random.Range(0f, maxZ)
             );
 
-            print($"Generated random destination: {destination} from bounds: {_cachedMazeSize}");
 
+            print(destination);
             return destination;
         }
 
@@ -87,40 +105,74 @@ namespace Hunter
         #region CHECKS
         private bool CheckIfTargetInViewport()
         {
-            return false;
+            var verticalShifter = Vector3.up * 1f;
+            var shiftedSelf = _transform.position + verticalShifter;
+            var shiftedTarget = _targetTransform.position + verticalShifter;
+
+            var didHit = Physics.Linecast(shiftedSelf, shiftedTarget, out RaycastHit hitInfo, _eyesIgnore);
+
+            if(!didHit) return false;
+            return hitInfo.collider.gameObject.CompareTag("Player");
         }
 
         private bool CheckIfNearTarget()
         {
-            return false;
+            var distanceToPlayer = Vector3.Distance(_transform.position, _targetTransform.position);
+            return distanceToPlayer <= _attackDistance;
+        }
+
+        private void HandleTargetMove(Vector3 position, bool isShifting = false)
+        {
+            if (!isShifting) return;
+            FollowTarget();
+        }
+
+        private bool CheckIfRouting(HunterActivity activity)
+        {
+            return _activity.Equals(activity)
+                && (!_aipath.reachedEndOfPath || _aipath.pathPending);
         }
         #endregion
 
         #region BEHAVIOUR
+        private void GoToPoint(Vector3 position)
+        {
+            // Set speed
+            _aipath.maxSpeed = _minSpeed;
+
+            // Select a random point in the maze and go to it
+            _aipath.destination = position;
+            _aipath.SearchPath();
+        }
+
         private void InvestigateMaze()
         {
-            if (_activity.Equals(HunterActivity.INVESTIGATING) && (!_aipath.reachedEndOfPath || _aipath.pathPending)) return;
+            // Ignore if already investigating
+            if (CheckIfRouting(HunterActivity.INVESTIGATING)) return;
 
             // Set new activity status
             _activity = HunterActivity.INVESTIGATING;
 
-            // Set speed
-            _aipath.maxSpeed = minSpeed;
-
-            // Select a random point in the maze and go to it
-            _aipath.destination = GenerateRandomDestination();
-            _aipath.SearchPath();
+            GoToPoint(GenerateRandomDestination());
         }
 
         private void AttackTarget()
         {
             // Hunter jumps on the player and kills him.
-            _aipath.maxSpeed = maxSpeed / 2;
+            _aipath.maxSpeed = _maxSpeed * 2;
+            // TODO: Implement Attack Target
+            print("ATTACKING BITCH");
         }
 
         private void FollowTarget()
         {
-            _aipath.maxSpeed = maxSpeed;
+            if(CheckIfRouting(HunterActivity.FOLLOWING)) return;
+
+            // Set new activity status
+            _activity = HunterActivity.FOLLOWING;
+
+            GoToPoint(_targetTransform.position);
+
         }
         #endregion
     }

@@ -24,7 +24,7 @@ namespace Generation
         private GeneratorCell[,] InstantiateGrid()
         {
            GeneratorCell[,] grid = new GeneratorCell[_mazeHeight, _mazeWidth];
-           
+
            for (var y = 0; y < _mazeHeight; ++y)
            {
                for (var x = 0; x < _mazeWidth; ++x)
@@ -32,7 +32,7 @@ namespace Generation
                    grid[y, x] = new GeneratorCell(x, y);
                }
            }
-            
+
            return grid;
         }
 
@@ -46,7 +46,7 @@ namespace Generation
             for (var y = 0; y < _mazeHeight; ++y)
             {
                 int runStart = 0;
-            
+
                 for (var x = 0; x < _mazeHeight; ++x)
                 {
                     if (y > 0 && (x + 1 == _mazeWidth || Random.Range(0, 2) > 0))
@@ -55,7 +55,7 @@ namespace Generation
                         _grid[y, targetX].borderedN = false;
                         _grid[y - 1, targetX].borderedS = false;
 
-                        runStart = x + 1; // @todo Optimize
+                        runStart = x + 1;
                     } else if (x + 1 < _mazeWidth)
                     {
                         _grid[y, x].borderedE = false;
@@ -63,7 +63,7 @@ namespace Generation
                     }
                 }
             }
-            
+
             return _grid;
         }
     }

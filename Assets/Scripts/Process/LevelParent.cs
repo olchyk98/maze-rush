@@ -11,16 +11,16 @@ namespace Process
     {
         private MazeParent _mazeParent;
         private EntitiesParent _entitiesParent;
-    
+
         private void Start()
         {
             _mazeParent = GetComponent<MazeParent>();
             _entitiesParent = GetComponent<EntitiesParent>();
-        
+
             InitializeEnvironment();
             InitializeEntities();
         }
-    
+
         /// <summary>
         /// Generates a new maze
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Player
 {
@@ -9,7 +10,9 @@ namespace Player
         [SerializeField] private Transform cameraTransform;
         [Range(5f, 15f)] [SerializeField] private float mouseSensitivity;
         [Range(5f, 30f)] [SerializeField] private float movementSpeed;
-    
+
+        public UnityAction<Vector3, bool> OnMove;
+
         private Transform _bodyTransform;
         private Rigidbody _rb;
         private PlayerControls _playerControls;
@@ -32,7 +35,7 @@ namespace Player
             _bodyTransform = GetComponent<Transform>();
             _rb = GetComponent<Rigidbody>();
             _playerControls = GetComponent<PlayerControls>();
-            
+
             _playerControls.OnMove += HandleMove;
             _playerControls.OnLook += HandleLook;
         }
@@ -43,13 +46,16 @@ namespace Player
             _playerControls.OnLook -= HandleLook;
         }
 
-        private void HandleMove(Vector3 direction)
+        private void HandleMove(Vector3 direction, bool isShifting)
         {
             var verticalForce = _bodyTransform.forward * direction.z;
             var horizontalForce = _bodyTransform.right * direction.x;
             var force = (verticalForce + horizontalForce) * movementSpeed;
 
+            if(isShifting) force /= 2;
+
            _rb.AddForce(force, ForceMode.Impulse);
+           OnMove?.Invoke(_bodyTransform.position, isShifting);
         }
 
         private void HandleLook(Vector2 direction)

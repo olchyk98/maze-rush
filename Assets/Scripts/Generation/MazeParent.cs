@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cell;
 
 namespace Generation
 {
@@ -111,9 +112,13 @@ namespace Generation
                 ? InstantiateVoidCell()
                 : directCell;
 
-            var size = targetCell.GetComponent<Collider>().bounds.size;
+            var size = targetCell
+                .GetComponent<CellPassport>()
+                .SizeCollider
+                .bounds
+                .size;
 
-            // Default cell should be deleted after usage, since
+            // Bulk cell should be deleted after usage, since
             // we don't want to have any extra cells in the world.
             if (directCell == default) DestroyImmediate(targetCell);
 
