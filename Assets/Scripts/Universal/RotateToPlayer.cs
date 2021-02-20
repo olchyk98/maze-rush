@@ -8,7 +8,7 @@ namespace Universal
     {
         private Transform _targetedTransform;
         private Transform _transform;
-        
+
         // This is important to have another variable indicating if script found a player object,
         // as it's extremely expensive to check the transform object for null on each frame.
         private bool _hasFoundPlayer;
@@ -24,7 +24,7 @@ namespace Universal
                 _hasFoundPlayer = true;
             }
         }
-        
+
         private void FixedUpdate()
         {
             HandleLookTick();
@@ -33,7 +33,7 @@ namespace Universal
         private void HandleLookTick()
         {
             if (!_hasFoundPlayer) return;
-            
+
             _transform.LookAt(_targetedTransform);
             _transform.rotation = Quaternion.LookRotation(_targetedTransform.forward);
         }
