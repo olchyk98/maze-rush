@@ -62,8 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 5584163499724681428}
-  mouseSensitivity: 10
-  movementSpeed: 10
+  _mouseSensitivity: 8.2
+  _movementSpeed: 6.8
 --- !u!114 &5614854025259303306
 MonoBehaviour:
   m_ObjectHideFlags: 0

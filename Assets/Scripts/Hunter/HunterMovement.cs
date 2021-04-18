@@ -9,6 +9,7 @@ namespace Hunter
     {
         INVESTIGATING,
         FOLLOWING,
+        FOLLOWING_STEPS,
         ATTACKING,
         WAITING,
     }
@@ -21,16 +22,17 @@ namespace Hunter
         private AIPath _aipath;
         private Transform _transform;
 
-        private GameObject _target;
         private Transform _targetTransform;
         private PlayerController _targetController;
 
         private Vector3 _cachedMazeSize = Vector3.zero;
 
-        [SerializeField] [Range(.5f, 10f)] private float _minSpeed;
-        [SerializeField] [Range(2f, 20f)] private float _maxSpeed;
+        [SerializeField] [Range(2f, 20f)] private float _speed;
         [SerializeField] [Range(.1f, 5f)] private float _attackDistance;
-        [SerializeField] private LayerMask _eyesIgnore;
+        [SerializeField] [Range(1f, 50f)] private float _hearingDistance;
+        [SerializeField] [Range(1f, 20f)] private float _attackEffect;
+        // Used to specify what objects hunter is able to see. Usually set to: &player and &obstacle[]
+        [SerializeField] private LayerMask _visibleLayers;
 
         private HunterActivity _activity = HunterActivity.WAITING;
 
@@ -40,11 +42,11 @@ namespace Hunter
             _aipath = GetComponent<AIPath>();
             _transform = GetComponent<Transform>();
 
-            _target = GetComponent<PlayerFinder>().FindPlayer();
-            _targetTransform = _target.GetComponent<Transform>();
-            _targetController = _target.GetComponent<PlayerController>();
+            var target = GetComponent<PlayerFinder>().FindPlayer();
+            _targetTransform = target.GetComponent<Transform>();
+            _targetController = target.GetComponent<PlayerController>();
 
-            _targetController.OnMove += HandleTargetMove;
+            _targetController.OnStep += HandleTargetStep;
         }
 
         private void Update()
@@ -54,7 +56,7 @@ namespace Hunter
 
         private void ScheduleBehaviour()
         {
-            // TODO: Rewrite the scheme using the StateMachine pattern.
+            // TODO: Rewrite scheme using the StateMachine pattern.
             if (CheckIfTargetInViewport())
             {
                 if (CheckIfNearTarget())
@@ -68,15 +70,7 @@ namespace Hunter
             }
             else
             {
-                // TODO: CONTINUE -> if FOLLOWING in the else block -> stop following and start investigating
-                if(_activity.Equals(HunterActivity.FOLLOWING))
-                {
-                    // TODO: Change if condition and here -> stop following and start investigating
-                }
-                else
-                {
-                    InvestigateMaze();
-                }
+                InvestigateMaze();
             }
         }
 
@@ -92,8 +86,6 @@ namespace Hunter
                 Random.Range(0f, maxZ)
             );
 
-
-            print(destination);
             return destination;
         }
 
@@ -109,9 +101,9 @@ namespace Hunter
             var shiftedSelf = _transform.position + verticalShifter;
             var shiftedTarget = _targetTransform.position + verticalShifter;
 
-            var didHit = Physics.Linecast(shiftedSelf, shiftedTarget, out RaycastHit hitInfo, _eyesIgnore);
+            var didHit = Physics.Linecast(shiftedSelf, shiftedTarget, out RaycastHit hitInfo, _visibleLayers);
 
-            if(!didHit) return false;
+            if (!didHit) return false;
             return hitInfo.collider.gameObject.CompareTag("Player");
         }
 
@@ -120,16 +112,24 @@ namespace Hunter
             var distanceToPlayer = Vector3.Distance(_transform.position, _targetTransform.position);
             return distanceToPlayer <= _attackDistance;
         }
+        private void HandleTargetStep(Transform targetTransform)
 
-        private void HandleTargetMove(Vector3 position, bool isShifting = false)
         {
-            if (!isShifting) return;
-            FollowTarget();
+            var distanceToTarget = Vector3.Distance(targetTransform.position, _transform.position);
+            if(distanceToTarget > _hearingDistance) return;
+
+            FollowTarget(true);
         }
 
+        /// <summary>
+        /// Returns true if moving because of the passed activity.
+        /// </summary>
+        /// <param name="activity">
+        /// Type of the controlling activity
+        /// </param>
         private bool CheckIfRouting(HunterActivity activity)
         {
-            return _activity.Equals(activity)
+            return (_activity.Equals(activity))
                 && (!_aipath.reachedEndOfPath || _aipath.pathPending);
         }
         #endregion
@@ -137,9 +137,6 @@ namespace Hunter
         #region BEHAVIOUR
         private void GoToPoint(Vector3 position)
         {
-            // Set speed
-            _aipath.maxSpeed = _minSpeed;
-
             // Select a random point in the maze and go to it
             _aipath.destination = position;
             _aipath.SearchPath();
@@ -148,10 +145,17 @@ namespace Hunter
         private void InvestigateMaze()
         {
             // Ignore if already investigating
-            if (CheckIfRouting(HunterActivity.INVESTIGATING)) return;
+            // or following steps
+            if (
+                CheckIfRouting(HunterActivity.INVESTIGATING)
+                || CheckIfRouting(HunterActivity.FOLLOWING_STEPS)
+           ) return;
 
             // Set new activity status
             _activity = HunterActivity.INVESTIGATING;
+
+            // Set speed
+            _aipath.maxSpeed = _speed / 2;
 
             GoToPoint(GenerateRandomDestination());
         }
@@ -159,17 +163,33 @@ namespace Hunter
         private void AttackTarget()
         {
             // Hunter jumps on the player and kills him.
-            _aipath.maxSpeed = _maxSpeed * 2;
-            // TODO: Implement Attack Target
-            print("ATTACKING BITCH");
+            _aipath.maxSpeed = _speed * 2;
+
+            // TODO: Play Animation
+            var targetHealth = _targetTransform
+                .gameObject
+                .GetComponent<PlayerController>();
+
+            _activity = HunterActivity.ATTACKING;
+            targetHealth.ApplyHit(_transform, _attackEffect);
         }
 
-        private void FollowTarget()
+        /// <summary>Build a path to the target and follows it.</summary>
+        /// <param name="isSuggested">Specifies if hunter is following target based on hearing.</param>
+        private void FollowTarget(bool isSuggested = false)
         {
-            if(CheckIfRouting(HunterActivity.FOLLOWING)) return;
+            if (
+                CheckIfRouting(HunterActivity.FOLLOWING)
+                || (isSuggested && CheckIfRouting(HunterActivity.FOLLOWING_STEPS))
+            ) return;
 
             // Set new activity status
-            _activity = HunterActivity.FOLLOWING;
+            _activity = (!isSuggested)
+                ? HunterActivity.FOLLOWING
+                : HunterActivity.FOLLOWING_STEPS;
+
+            // Set speed
+            _aipath.maxSpeed = _speed;
 
             GoToPoint(_targetTransform.position);
 
