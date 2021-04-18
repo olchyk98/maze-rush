@@ -31,7 +31,7 @@ namespace Player
         {
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
-            bool isShifting = Input.GetKeyDown(KeyCode.LeftShift);
+            bool isShifting = Input.GetKey(KeyCode.LeftShift);
 
             if (x != 0 || y != 0)
             {
@@ -55,7 +55,7 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var hasCollided = Physics.Raycast(
-                    _transform.position, 
+                    _transform.position,
                     _transform.forward,
                     out var hit,
                     Mathf.Infinity,
