@@ -61,4 +61,4 @@ crashlytics-build.properties
 # IDEs & Junk
 *.idea/
 .collabignore/
-.DS_Store/
+.DS_Store

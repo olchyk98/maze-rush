@@ -8,6 +8,8 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Animator _torchAnimator;
+
         [Range(5f, 15f)] [SerializeField] private float _mouseSensitivity;
         [Range(5f, 30f)] [SerializeField] private float _movementSpeed;
 
@@ -53,7 +55,6 @@ namespace Player
             var verticalForce = _bodyTransform.forward * direction.z;
             var horizontalForce = _bodyTransform.right * direction.x;
             var force = (verticalForce + horizontalForce) * _movementSpeed;
-
             if (isShifting) force /= 3;
 
             _rb.AddForce(force, ForceMode.Impulse);
@@ -62,6 +63,11 @@ namespace Player
             {
                 OnStep?.Invoke(_bodyTransform);
             }
+        }
+
+        private void Update () {
+            var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
+            _torchAnimator.SetFloat("hostVelocity", totalVelocity);
         }
 
         private void HandleLook(Vector2 direction)

@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraTransform: {fileID: 5584163499724681428}
+  _torchAnimator: {fileID: 1842235778740544936}
   _mouseSensitivity: 8.2
   _movementSpeed: 6.8
 --- !u!114 &5614854025259303306
@@ -126,7 +127,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.56, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4285252304006016597}
   m_Father: {fileID: 5584163498423607865}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -153,7 +155,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 100.388855
   orthographic: 0
@@ -251,7 +253,7 @@ MonoBehaviour:
   SMAAQuality: 2
   dithering: 1
   stopNaNs: 0
-  taaSharpenStrength: 0.6
+  taaSharpenStrength: 2
   physicalParameters:
     m_Iso: 220
     m_ShutterSpeed: 0.005
@@ -259,7 +261,7 @@ MonoBehaviour:
     m_BladeCount: 5
     m_Curvature: {x: 2, y: 11}
     m_BarrelClipping: 0.25
-    m_Anamorphism: 0
+    m_Anamorphism: -1
   flipYMode: 0
   fullscreenPassthrough: 0
   allowDynamicResolution: 0
@@ -304,3 +306,84 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &6281817603777277648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5584163499724681428}
+    m_Modifications:
+    - target: {fileID: 898872289479243429, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_Name
+      value: Torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98836154
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.15212336
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8da3268a4a9884db390ce40d959dec3f, type: 3}
+--- !u!4 &4285252304006016597 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7806208820455358597, guid: 8da3268a4a9884db390ce40d959dec3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6281817603777277648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1842235778740544936 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5673849959765035896, guid: 8da3268a4a9884db390ce40d959dec3f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6281817603777277648}
+  m_PrefabAsset: {fileID: 0}
