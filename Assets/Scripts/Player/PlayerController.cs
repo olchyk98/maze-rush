@@ -7,7 +7,7 @@ namespace Player
     [RequireComponent(typeof(PlayerControls))]
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private Transform cameraTransform;
+        [SerializeField] private Transform _cameraTransform;
         [Range(5f, 15f)] [SerializeField] private float _mouseSensitivity;
         [Range(5f, 30f)] [SerializeField] private float _movementSpeed;
 
@@ -19,6 +19,8 @@ namespace Player
 
         private float _rotationY;
         private const float SpeedMultiplier = 100f;
+
+        private static int AnimationCameraDiesHash = Animator.StringToHash("PlayerCameraDies");
 
         private void OnEnable()
         {
@@ -69,9 +71,8 @@ namespace Player
 
             _rotationY = Mathf.Clamp(nextY, -90f, 90f);
             horizontalRotation.y += direction.x * _mouseSensitivity * SpeedMultiplier * Time.deltaTime;
-
-            // Apply rotation changes
-            cameraTransform.localRotation = Quaternion.Euler(_rotationY, 0f, 0f);
+// Apply rotation changes
+            _cameraTransform.localRotation = Quaternion.Euler(_rotationY, 0f, 0f);
             _bodyTransform.rotation = Quaternion.Euler(horizontalRotation);
         }
 
@@ -79,8 +80,17 @@ namespace Player
         {
             var force = Vector2.right * attackEffect;
 
-            // TODO: Implement Game Over
             _rb.AddForceAtPosition(force, sourceTransform.position, ForceMode.VelocityChange);
+            ApplyDeathEffect();
+        }
+
+        private void ApplyDeathEffect () {
+            var animator = _cameraTransform
+                .gameObject
+                .GetComponent<Animator>();
+
+            animator.applyRootMotion = false;
+            animator.Play(AnimationCameraDiesHash);
         }
     }
 }
