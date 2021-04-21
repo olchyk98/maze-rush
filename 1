@@ -1,0 +1,72 @@
+# Load oh-my-zsh library.
+antigen use oh-my-zsh
+# Load bundles from the default repo (oh-my-zsh).
+antigen bundle git
+antigen bundle command-not-found
+antigen bundle docker
+# Load bundles from external repos.
+#antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle github.com/zsh-users/zsh-autosuggestions
+antigen bundle smallhadroncollider/antigen-git-rebase # easy git rebase with one command - "rebase"
+
+# Select theme.
+antigen theme denysdovhan/spaceship-prompt
+# Tell Antigen that you're done.
+antigen apply
+
+# Custom LS function
+auto-ls-custom_function () {
+  ls -la
+}
+
+AUTO_LS_COMMANDS=(custom_function)
+
+# Custom Alises
+alias rider="/home/oles/Documents/ides/rider/bin/rider.sh"
+alias pycharm="/home/oles/Documents/ides/pycharm-2020.2.1/bin/pycharm.sh"
+alias idea="/home/oles/Documents/ides/idea-IU-202.6397.94/bin/idea.sh"
+alias yui="yarn upgrade-interactive --latest && yarn-dedupe && yarn"
+alias e="exit"
+alias rf="rm -rf"
+
+s() {
+    ag "$1" --ignore dist --ignore node_modules
+}
+
+vik_mode() {
+  say VIK MODE ACTIVATED!
+  afplay /System/Library/Sounds/Funk.aiff
+
+  say HACKING PENTAGON IN 60 SECONDS
+  afplay /System/Library/Sounds/Sosumi.aiff
+}
+
+# Github shortcuts
+alias gc='git checkout'
+alias gl='git log'
+alias gp='git push'
+alias gb='git branch'
+alias gcom='git commit'
+alias gs='git status'
+alias gp='git pull --rebase'
+alias gr='git rebase'
+alias gpr='git pull --rebase'
+alias gclean='git branch | grep -v "master" | xargs git branch -d'
+alias ms='git commit -m "ms"'
+alias add='git add -A'
+
+alias dev='cd ~/Documents/Coding/htdocs/'
+alias watch='yarn run watch'
+alias brew='/opt/homebrew/bin/brew'
+alias yrd='yarn run demo --watch'
+alias vik='vik_mode'
+alias emme='yarn'
+
+alias brew='arch -x86_64 brew'
+
+# Fuzzy Search Conf
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi

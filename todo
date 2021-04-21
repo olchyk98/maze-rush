@@ -8,8 +8,9 @@
 [x] death screen (sepia+GAME_OVER text)
 
 torch implementation:
-[  ] place in the hand
-[  ] add light and particles
+[x] place in the hand
+[x] add light and particles
+[x] walking animation
 [  ] usage animation
 [  ] zombie stops
 [  ] player slow movement
@@ -20,6 +21,7 @@ sound effects:
 [  ] hunter attacks
 [  ] hunter hears
 [  ] hunter investigating (ambient, random)
+[  ] hunter steps (3d sound)
 
 [  ] ambient torch sounds
 [  ] torch use sound
@@ -63,3 +65,7 @@ ready for production:
 [  ] test on Windows
 [  ] create a release on github
 [  ] create game trailer
+
+manual:
+
+[  ] don't forget about shifting
