@@ -3,9 +3,16 @@
 [x] player apply force on hit
 [x] shifting
 [x] make cell walls thicker
-[  ] hunter movement animation
-[  ] hunter attack animation
-[  ] death screen (sepia+GAME_OVER text)
+[x] hunter movement animation
+[x] hunter attack animation
+[x] death screen (sepia+GAME_OVER text)
+
+torch implementation:
+[  ] place in the hand
+[  ] add light and particles
+[  ] usage animation
+[  ] zombie stops
+[  ] player slow movement
 
 sound effects:
 
@@ -13,3 +20,46 @@ sound effects:
 [  ] hunter attacks
 [  ] hunter hears
 [  ] hunter investigating (ambient, random)
+
+[  ] ambient torch sounds
+[  ] torch use sound
+
+[  ] player steps (breathing)
+
+[  ] screamer sounds
+[  ] cashier random speeches (x3)
+
+hub:
+
+[  ] implement money bug
+[  ] implement shop cashier
+[  ] implement shop lots
+
+cutscene:
+
+[  ] "Talking to cashier":
+  Once the player spawns, an arrow appears above the cashier.
+  Once the player comes to the cashier, a cutscene starts.
+  Once the cutscene starts, view camera is set to the wall camera.
+  Once %pipeline completed, start the dialogue.
+
+  * The player comes to the cashier.
+  - Cashier: "Welcome hero, earn money trying out my game!"
+  - Player: "What's the catch?"
+  - Cashier: "There's no catch. Complete the maze and earn money!"
+  ...a few seconds of pause
+  - Cashier: "Enter the portal to start. Once you get enough money you can buy perks that will help you pass more advanced levels."
+  - Cashier (quiet): "..if you survive..."
+
+menu:
+
+[  ] play
+[  ] settings (graphics, sounds volume, go to menu)
+[  ] exit
+
+ready for production:
+
+[  ] build for Mac/Windows
+[  ] test on Windows
+[  ] create a release on github
+[  ] create game trailer
