@@ -1,0 +1,15 @@
+[  ] rename HunterMovement to HunterBehaviour / HunterBrain
+[x] listening does not work
+[x] player apply force on hit
+[x] shifting
+[x] make cell walls thicker
+[  ] hunter movement animation
+[  ] hunter attack animation
+[  ] death screen (sepia+GAME_OVER text)
+
+sound effects:
+
+[  ] hunter sees
+[  ] hunter attacks
+[  ] hunter hears
+[  ] hunter investigating (ambient, random)
