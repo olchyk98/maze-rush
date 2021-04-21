@@ -27,6 +27,7 @@ namespace Hunter
 
         private Vector3 _cachedMazeSize = Vector3.zero;
 
+        [SerializeField] private Animator _animator;
         [SerializeField] [Range(2f, 20f)] private float _speed;
         [SerializeField] [Range(.1f, 5f)] private float _attackDistance;
         [SerializeField] [Range(1f, 50f)] private float _hearingDistance;
@@ -35,6 +36,7 @@ namespace Hunter
         [SerializeField] private LayerMask _visibleLayers;
 
         private HunterActivity _activity = HunterActivity.WAITING;
+        private static int AnimationZombieAttackHash = Animator.StringToHash("ZombieAttack");
 
         private void Start()
         {
@@ -165,12 +167,13 @@ namespace Hunter
             // Hunter jumps on the player and kills him.
             _aipath.maxSpeed = _speed * 2;
 
-            // TODO: Play Animation
             var targetHealth = _targetTransform
                 .gameObject
                 .GetComponent<PlayerController>();
 
             _activity = HunterActivity.ATTACKING;
+            _animator.Play(AnimationZombieAttackHash);
+
             targetHealth.ApplyHit(_transform, _attackEffect);
         }
 
