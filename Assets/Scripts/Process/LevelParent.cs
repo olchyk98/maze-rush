@@ -37,7 +37,6 @@ namespace Process
 
             _entitiesParent.SpawnExit(keyPositions);
             _entitiesParent.SpawnPlayer(keyPositions);
-            _entitiesParent.SpawnItems(keyPositions);
             _entitiesParent.SpawnHunter(keyPositions);
             _entitiesParent.SpawnNavField(keyPositions);
         }

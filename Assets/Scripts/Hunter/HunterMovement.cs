@@ -118,7 +118,7 @@ namespace Hunter
 
         {
             var distanceToTarget = Vector3.Distance(targetTransform.position, _transform.position);
-            if(distanceToTarget > _hearingDistance) return;
+            if (distanceToTarget > _hearingDistance) return;
 
             FollowTarget(true);
         }
@@ -172,9 +172,13 @@ namespace Hunter
                 .GetComponent<PlayerController>();
 
             _activity = HunterActivity.ATTACKING;
-            _animator.Play(AnimationZombieAttackHash);
 
-            targetHealth.ApplyHit(_transform, _attackEffect);
+            bool didHit = targetHealth.ApplyHit(_transform, _attackEffect);
+
+            if (didHit)
+            {
+                _animator.Play(AnimationZombieAttackHash);
+            }
         }
 
         /// <summary>Build a path to the target and follows it.</summary>

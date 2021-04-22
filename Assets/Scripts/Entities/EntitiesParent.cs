@@ -10,7 +10,6 @@ namespace Entities
     {
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject exitPrefab;
-        [SerializeField] private GameObject itemPrefab;
         [SerializeField] private GameObject hunterPrefab;
         [SerializeField] private GameObject navFieldPrefab;
 
@@ -29,11 +28,6 @@ namespace Entities
         public void SpawnExit(MazeKeyPositions positions)
         {
             Instantiate(exitPrefab, positions.Exit, Quaternion.identity);
-        }
-
-        public void SpawnItems(MazeKeyPositions positions)
-        {
-            Instantiate(itemPrefab, positions.Items[0], Quaternion.identity);
         }
 
         public void SpawnHunter(MazeKeyPositions positions)
