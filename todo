@@ -11,9 +11,9 @@ torch implementation:
 [x] place in the hand
 [x] add light and particles
 [x] walking animation
-[  ] usage animation
-[  ] zombie stops
-[  ] player slow movement
+[x] usage animation
+[x] zombie stops
+[x] player slow movement
 
 sound effects:
 

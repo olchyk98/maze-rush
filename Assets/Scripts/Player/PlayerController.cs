@@ -20,6 +20,7 @@ namespace Player
         private PlayerControls _playerControls;
 
         private float _rotationY;
+        private bool _isProtecting = false;
         private const float SpeedMultiplier = 100f;
 
         private static int AnimationCameraDiesHash = Animator.StringToHash("PlayerCameraDies");
@@ -42,12 +43,14 @@ namespace Player
 
             _playerControls.OnMove += HandleMove;
             _playerControls.OnLook += HandleLook;
+            _playerControls.OnProtect += HandleProtect;
         }
 
         private void OnDestroy()
         {
             _playerControls.OnMove -= HandleMove;
             _playerControls.OnLook -= HandleLook;
+            _playerControls.OnProtect -= HandleProtect;
         }
 
         private void HandleMove(Vector3 direction, bool isShifting)
@@ -55,7 +58,8 @@ namespace Player
             var verticalForce = _bodyTransform.forward * direction.z;
             var horizontalForce = _bodyTransform.right * direction.x;
             var force = (verticalForce + horizontalForce) * _movementSpeed;
-            if (isShifting) force /= 3;
+            if(_isProtecting) force /= 7;
+            else if (isShifting) force /= 3;
 
             _rb.AddForce(force, ForceMode.Impulse);
 
@@ -65,7 +69,14 @@ namespace Player
             }
         }
 
-        private void Update () {
+        private void HandleProtect(bool isProtecting)
+        {
+            _isProtecting = isProtecting;
+            _torchAnimator.SetBool("hostIsUsing", isProtecting);
+        }
+
+        private void Update()
+        {
             var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
             _torchAnimator.SetFloat("hostVelocity", totalVelocity);
         }
@@ -77,20 +88,41 @@ namespace Player
 
             _rotationY = Mathf.Clamp(nextY, -90f, 90f);
             horizontalRotation.y += direction.x * _mouseSensitivity * SpeedMultiplier * Time.deltaTime;
-// Apply rotation changes
+            // Apply rotation changes
             _cameraTransform.localRotation = Quaternion.Euler(_rotationY, 0f, 0f);
             _bodyTransform.rotation = Quaternion.Euler(horizontalRotation);
         }
 
-        public void ApplyHit(Transform sourceTransform, float attackEffect)
+        /// <summary>
+        /// Applies hit to the entity.
+        /// </summary>
+        /// <param name="sourceTransform">
+        /// Transform of the attacking entity.
+        /// </param>
+        /// <param name="attackEffect">
+        /// Punch strength of the attack. Affects
+        /// force of the entity.
+        /// </param>
+        /// <returns>
+        /// Boolean that represents if the entity was hit.
+        /// May return false if the entity is dead or protecting itself.
+        /// </returns>
+        public bool ApplyHit(Transform sourceTransform, float attackEffect)
         {
+            if (_isProtecting) return false;
+
             var force = Vector2.right * attackEffect;
 
             _rb.AddForceAtPosition(force, sourceTransform.position, ForceMode.VelocityChange);
-            ApplyDeathEffect();
+            FireDeathAnimation();
+            return true;
         }
 
-        private void ApplyDeathEffect () {
+        /// <summary>
+        /// Inits the entity death animation.
+        /// </summary>
+        private void FireDeathAnimation()
+        {
             var animator = _cameraTransform
                 .gameObject
                 .GetComponent<Animator>();

@@ -11,9 +11,11 @@ namespace Player
 
         private Transform _transform;
 
+        private bool _isProtecting = false;
+
         public UnityAction<Vector3, bool> OnMove;
         public UnityAction<Vector2> OnLook;
-        public UnityAction<GameObject> OnNearUse;
+        public UnityAction<bool> OnProtect;
 
         private void Start()
         {
@@ -52,20 +54,11 @@ namespace Player
 
         private void HandleNearUseTick()
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                var hasCollided = Physics.Raycast(
-                    _transform.position,
-                    _transform.forward,
-                    out var hit,
-                    Mathf.Infinity,
-                    nearUseLayers
-                );
+            bool isProtecting = Input.GetKey(KeyCode.E);
 
-                if (hasCollided)
-                {
-                    OnNearUse?.Invoke(hit.collider.gameObject);
-                }
+            if(isProtecting != _isProtecting) {
+                _isProtecting = isProtecting;
+                OnProtect?.Invoke(_isProtecting);
             }
         }
     }
