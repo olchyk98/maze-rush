@@ -46,6 +46,12 @@ namespace Player
             _playerControls.OnProtect += HandleProtect;
         }
 
+        private void Update()
+        {
+            var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
+            _torchAnimator.SetFloat("hostVelocity", totalVelocity);
+        }
+
         private void OnDestroy()
         {
             _playerControls.OnMove -= HandleMove;
@@ -53,6 +59,20 @@ namespace Player
             _playerControls.OnProtect -= HandleProtect;
         }
 
+        /// <summary>
+        /// Entity movement handler.
+        /// Controls rigidbody and speed logic
+        /// in case to move the entity.
+        /// </summary>
+        /// <param name="direction">
+        /// Direction info taken from the input buffer.
+        /// </param>
+        /// <param name="isShifting">
+        /// Boolean that represents if the entity is shifting
+        /// with no making noise.
+        /// If set to true, handler will reduce entity's speed
+        /// and prevent other entities from hearing it.
+        /// </param>
         private void HandleMove(Vector3 direction, bool isShifting)
         {
             var verticalForce = _bodyTransform.forward * direction.z;
@@ -69,18 +89,28 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Protection Handler.
+        /// Controls animation and changes behaviour state.
+        /// </summary>
+        /// <param name="isProtecting">
+        /// Boolean that represents if the entity is currently
+        /// using its hand to protect itself.
+        /// </param>
         private void HandleProtect(bool isProtecting)
         {
             _isProtecting = isProtecting;
             _torchAnimator.SetBool("hostIsUsing", isProtecting);
         }
 
-        private void Update()
-        {
-            var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
-            _torchAnimator.SetFloat("hostVelocity", totalVelocity);
-        }
-
+        /// <summary>
+        /// Look handler.
+        /// Controls the camera in case to give entity
+        /// the ability to look around.
+        /// </summary>
+        /// <param name="direction">
+        /// Input vector taken from the input buffer.
+        /// </param>
         private void HandleLook(Vector2 direction)
         {
             var horizontalRotation = _bodyTransform.rotation.eulerAngles;

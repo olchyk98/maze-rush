@@ -76,6 +76,12 @@ namespace Hunter
             }
         }
 
+        /// <summary>
+        /// Randomized a random position from the maze.
+        /// </summary>
+        /// <returns>
+        /// Vector of the randomized point.
+        /// </returns>
         private Vector3 GenerateRandomDestination()
         {
             float maxX = _cachedMazeSize.x;
@@ -91,6 +97,10 @@ namespace Hunter
             return destination;
         }
 
+        /// <summary>
+        /// Resets cached maze size that is used
+        /// to generate random positions in maze and handle hunter's behaviour.
+        /// </summary>
         public void UpdateMazeSizeCache(Vector3 newSize)
         {
             _cachedMazeSize = newSize;
@@ -137,6 +147,10 @@ namespace Hunter
         #endregion
 
         #region BEHAVIOUR
+        /// <summary>
+        /// Forces actor to go to the targeted
+        /// destination in the maze.
+        /// </summary>
         private void GoToPoint(Vector3 position)
         {
             // Select a random point in the maze and go to it
@@ -144,6 +158,10 @@ namespace Hunter
             _aipath.SearchPath();
         }
 
+        /// <summary>
+        /// Puts the actor in the investigating
+        /// mode.
+        /// </summary>
         private void InvestigateMaze()
         {
             // Ignore if already investigating
@@ -162,6 +180,9 @@ namespace Hunter
             GoToPoint(GenerateRandomDestination());
         }
 
+        /// <summary>
+        /// Attacks the vectored target.
+        /// </summary>
         private void AttackTarget()
         {
             // Hunter jumps on the player and kills him.
@@ -181,8 +202,12 @@ namespace Hunter
             }
         }
 
-        /// <summary>Build a path to the target and follows it.</summary>
-        /// <param name="isSuggested">Specifies if hunter is following target based on hearing.</param>
+        /// <summary>
+        /// Build a path to the target and follows it.
+        /// </summary>
+        /// <param name="isSuggested">
+        /// Specifies if hunter is following target based on hearing.
+        /// </param>
         private void FollowTarget(bool isSuggested = false)
         {
             if (

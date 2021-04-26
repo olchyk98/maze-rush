@@ -11,7 +11,7 @@ namespace Player
 
         private Transform _transform;
 
-        private bool _isProtecting = false;
+        private bool _isUsingHand = false;
 
         public UnityAction<Vector3, bool> OnMove;
         public UnityAction<Vector2> OnLook;
@@ -29,6 +29,10 @@ namespace Player
             HandleNearUseTick();
         }
 
+        /// <summary>
+        /// Handles movement tick for the entity.
+        /// Fires event if any input info exists in the buffer.
+        /// </summary>
         private void HandleMoveTick()
         {
             float x = Input.GetAxis("Horizontal");
@@ -41,6 +45,10 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Handles camera look tick for the entity.
+        /// Fires event if any input info exists in the buffer.
+        /// </summary>
         private void HandleLookTick()
         {
             float x = Input.GetAxis("Mouse X");
@@ -52,13 +60,17 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Fires event if the entity is trying to use a
+        /// hand tool.
+        /// </summary>
         private void HandleNearUseTick()
         {
-            bool isProtecting = Input.GetKey(KeyCode.E);
+            bool isUsingHand = Input.GetKey(KeyCode.E);
 
-            if(isProtecting != _isProtecting) {
-                _isProtecting = isProtecting;
-                OnProtect?.Invoke(_isProtecting);
+            if(isUsingHand != _isUsingHand) {
+                _isUsingHand = isUsingHand;
+                OnProtect?.Invoke(_isUsingHand);
             }
         }
     }
