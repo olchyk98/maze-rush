@@ -78,7 +78,7 @@ namespace Player
             var verticalForce = _bodyTransform.forward * direction.z;
             var horizontalForce = _bodyTransform.right * direction.x;
             var force = (verticalForce + horizontalForce) * _movementSpeed;
-            if(_isProtecting) force /= 7;
+            if (_isProtecting) force /= 7;
             else if (isShifting) force /= 3;
 
             _rb.AddForce(force, ForceMode.Impulse);
