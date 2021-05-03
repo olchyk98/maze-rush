@@ -17,18 +17,7 @@ torch implementation:
 
 sound effects:
 
-[  ] hunter sees
-[  ] hunter attacks
-[  ] hunter hears
-[  ] hunter investigating (ambient, random)
-[  ] hunter steps (3d sound)
-
-[  ] ambient torch sounds
-[  ] torch use sound
-
-[  ] player steps (breathing)
-
-[  ] screamer sounds
+[  ] connect manager to actions
 [  ] cashier random speeches (x3)
 
 hub:
@@ -52,6 +41,10 @@ cutscene:
   ...a few seconds of pause
   - Cashier: "Enter the portal to start. Once you get enough money you can buy perks that will help you pass more advanced levels."
   - Cashier (quiet): "..if you survive..."
+
+implement dying:
+  teleporting to the hub
+  decreasing number of hearts
 
 menu:
 
