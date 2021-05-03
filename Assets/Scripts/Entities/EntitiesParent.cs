@@ -33,7 +33,7 @@ namespace Entities
         public void SpawnHunter(MazeKeyPositions positions)
         {
             var hunter = Instantiate(hunterPrefab, positions.Hunter, Quaternion.identity);
-            hunter.GetComponent<HunterMovement>().UpdateMazeSizeCache(positions.MazeEnd);
+            hunter.GetComponent<HunterBrain>().UpdateMazeSizeCache(positions.MazeEnd);
         }
 
         private IEnumerator BakeMeshOnUpdate(GameObject navField)

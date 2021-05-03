@@ -1693,6 +1693,8 @@ GameObject:
   - component: {fileID: 8394123614484866307}
   - component: {fileID: 7599198953279803624}
   - component: {fileID: 2035276814532906608}
+  - component: {fileID: 2003096046170677713}
+  - component: {fileID: 1594903648198238591}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -1811,6 +1813,138 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45aac2db295d741bf9d534278a518dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &2003096046170677713
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458634496319916231}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1594903648198238591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458634496319916231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1f886a0f142403bb5329df740e80fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stacks:
+  - Name: Spawn
+    ClipsStack:
+    - {fileID: 8300000, guid: 190324c6b63f84ceebf875f0c95c5659, type: 3}
+    - {fileID: 8300000, guid: 113f90509e22b485080f8eff26060cbf, type: 3}
+  - Name: Ambient
+    ClipsStack:
+    - {fileID: 8300000, guid: ce0b971b352814a399180c02e0433a11, type: 3}
+    - {fileID: 8300000, guid: 5e251f99d41fd489b9cb1b25da06e077, type: 3}
+  - Name: Attack
+    ClipsStack:
+    - {fileID: 8300000, guid: 758bda16eeaa84c1bb39e5a550770f9b, type: 3}
+  - Name: Follow
+    ClipsStack:
+    - {fileID: 8300000, guid: 341f64eb50e9e4e10b692d9fc2b1e19b, type: 3}
+    - {fileID: 8300000, guid: 8fde35c224eb048c2befe04174c078b5, type: 3}
+  - Name: Investigate
+    ClipsStack:
+    - {fileID: 8300000, guid: 806315b7c4d3947c2b4c591284cc6b7e, type: 3}
+    - {fileID: 8300000, guid: 3833d0c30ae1543f28a9c1c5e4dae4bb, type: 3}
+  - Name: Screamers
+    ClipsStack:
+    - {fileID: 8300000, guid: e4ccf77a934804520912939566972857, type: 3}
+    - {fileID: 8300000, guid: 9ae194c96f2c84aea8d109cf710c5816, type: 3}
 --- !u!1 &5489405583644931023
 GameObject:
   m_ObjectHideFlags: 0

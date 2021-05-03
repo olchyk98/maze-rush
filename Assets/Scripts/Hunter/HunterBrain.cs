@@ -16,7 +16,7 @@ namespace Hunter
 
     [RequireComponent(typeof(AIPath))] // Brings Pathfinding::Seeker<@T> [!]
     [RequireComponent(typeof(PlayerFinder))]
-    public class HunterMovement : MonoBehaviour
+    public class HunterBrain : MonoBehaviour
     {
         private Seeker _seeker;
         private AIPath _aipath;
@@ -24,6 +24,7 @@ namespace Hunter
 
         private Transform _targetTransform;
         private PlayerController _targetController;
+        private SoundManager _audio;
 
         private Vector3 _cachedMazeSize = Vector3.zero;
 
@@ -43,17 +44,25 @@ namespace Hunter
             _seeker = GetComponent<Seeker>();
             _aipath = GetComponent<AIPath>();
             _transform = GetComponent<Transform>();
+            _audio = GetComponent<SoundManager>();
 
             var target = GetComponent<PlayerFinder>().FindPlayer();
             _targetTransform = target.GetComponent<Transform>();
             _targetController = target.GetComponent<PlayerController>();
 
             _targetController.OnStep += HandleTargetStep;
+
+            PlaySpawnSound();
         }
+
 
         private void Update()
         {
             ScheduleBehaviour();
+        }
+
+        private void PlaySpawnSound () {
+            _audio.PlayRandom("Spawn");
         }
 
         private void ScheduleBehaviour()
