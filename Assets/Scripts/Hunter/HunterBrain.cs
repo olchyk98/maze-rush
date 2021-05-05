@@ -16,15 +16,16 @@ namespace Hunter
 
     [RequireComponent(typeof(AIPath))] // Brings Pathfinding::Seeker<@T> [!]
     [RequireComponent(typeof(PlayerFinder))]
+    [RequireComponent(typeof(SoundManager))]
     public class HunterBrain : MonoBehaviour
     {
         private Seeker _seeker;
         private AIPath _aipath;
         private Transform _transform;
+        private SoundManager _audio;
 
         private Transform _targetTransform;
         private PlayerController _targetController;
-        private SoundManager _audio;
 
         private Vector3 _cachedMazeSize = Vector3.zero;
 
@@ -63,6 +64,7 @@ namespace Hunter
 
         private void PlaySpawnSound () {
             _audio.PlayRandom("Spawn");
+            _audio.PlayAmbient("Ambient", 15, 60);
         }
 
         private void ScheduleBehaviour()
@@ -208,6 +210,7 @@ namespace Hunter
             if (didHit)
             {
                 _animator.Play(AnimationZombieAttackHash);
+                _audio.PlayRandom("Attack");
             }
         }
 
@@ -233,7 +236,7 @@ namespace Hunter
             _aipath.maxSpeed = _speed;
 
             GoToPoint(_targetTransform.position);
-
+            _audio.PlayRandom("Follow");
         }
         #endregion
     }
