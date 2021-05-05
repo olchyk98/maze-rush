@@ -57,7 +57,10 @@ namespace Player
         private void Update()
         {
             var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
-            _torchAnimator.SetFloat("hostVelocity", totalVelocity);
+            if(_torchAnimator != default)
+            {
+                _torchAnimator.SetFloat("hostVelocity", totalVelocity);
+            }
 
             if(totalVelocity <= 0.001f)
             {
@@ -101,13 +104,13 @@ namespace Player
             {
                 OnStep?.Invoke(_bodyTransform);
 
-                _audio.StopELF(RunAudioELF);
-                _audio.PlayELF(ShiftAudioELF, "Shift");
+                _audio.StopELF(ShiftAudioELF);
+                _audio.PlayELF(RunAudioELF, "Run");
                 return;
             }
 
-            _audio.StopELF(ShiftAudioELF);
-            _audio.PlayELF(RunAudioELF, "Run");
+            _audio.PlayELF(ShiftAudioELF, "Shift");
+            _audio.StopELF(RunAudioELF);
         }
 
         /// <summary>
@@ -121,11 +124,11 @@ namespace Player
         private void HandleProtect(bool isProtecting)
         {
             _isProtecting = isProtecting;
-            _torchAnimator.SetBool("hostIsUsing", isProtecting);
+            _torchAnimator?.SetBool("hostIsUsing", isProtecting);
 
             if (isProtecting)
             {
-                _torch.Audio.PlayRandom("Use");
+                _torch?.Audio.PlayRandom("Use");
             }
         }
 

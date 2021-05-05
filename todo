@@ -18,17 +18,17 @@ torch implementation:
 sound effects:
 
 [x] connect sound managers to various actions
-[  ] cashier random speeches (x3)
+[...] cashier random speeches (x3)
 
 hub:
 
 [  ] implement money bug
-[  ] implement shop cashier
-[  ] implement shop lots
+[...] implement shop cashier
+[...] implement shop lots
 
 cutscene:
 
-[  ] "Talking to cashier":
+[...] "Talking to cashier":
   Once the player spawns, an arrow appears above the cashier.
   Once the player comes to the cashier, a cutscene starts.
   Once the cutscene starts, view camera is set to the wall camera.
@@ -43,8 +43,8 @@ cutscene:
   - Cashier (quiet): "..if you survive..."
 
 implement dying:
-  teleporting to the hub
-  decreasing number of hearts
+  [x] teleporting to the hub
+  [  ] decreasing number of hearts
 
 menu:
 
@@ -62,3 +62,5 @@ ready for production:
 manual:
 
 [  ] don't forget about shifting
+
+[  ] postportem
