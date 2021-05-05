@@ -24,11 +24,6 @@ namespace Universal
 
         public List<SMStackPair> Stacks;
 
-        // True, if the currently played sound is connected
-        // to an action in the scene. Once the action is interrupted or finished, the sound
-        // will stop playing.
-        private bool _isHooked;
-
         private void Awake()
         {
             _activeSources = new List<AudioSource>();
@@ -123,18 +118,6 @@ namespace Universal
         }
 
         /// <summary>
-        /// Loads and Plays the passed audio clip with hook.
-        /// </summary>
-        /// <param name="clip">
-        /// The audioclip that needs to be played.
-        /// </param>
-        public void PlayWithHook(AudioClip clip)
-        {
-            _isHooked = true;
-            Play(clip);
-        }
-
-        /// <summary>
         /// Clears the audio buffer,
         /// by stopping all active sources.
         /// </summary>
@@ -222,18 +205,6 @@ namespace Universal
         public void PlayAmbient(string stackName, float delay)
         {
             PlayAmbient(stackName, delay, delay);
-        }
-
-        /// <summary>
-        /// Plays random clip from the stack.
-        /// </summary>
-        /// <param name="stackName">
-        /// Name of the targeted stack.
-        /// </param>
-        public void PlayRandomWithHook(string stackName)
-        {
-            var clip = FetchRandomClip(stackName);
-            PlayWithHook(clip);
         }
 
         public List<AudioClip> FetchStack(string stackName)
