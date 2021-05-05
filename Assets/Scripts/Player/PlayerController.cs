@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using Entities;
+using Universal;
 
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerControls))]
+    [RequireComponent(typeof(SoundManager))]
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Animator _torchAnimator;
+        [SerializeField] private TorchHandler _torch;
 
         [Range(5f, 15f)] [SerializeField] private float _mouseSensitivity;
         [Range(5f, 30f)] [SerializeField] private float _movementSpeed;
@@ -18,12 +22,15 @@ namespace Player
         private Transform _bodyTransform;
         private Rigidbody _rb;
         private PlayerControls _playerControls;
+        private SoundManager _audio;
 
         private float _rotationY;
         private bool _isProtecting = false;
         private const float SpeedMultiplier = 100f;
 
         private static int AnimationCameraDiesHash = Animator.StringToHash("PlayerCameraDies");
+        private static string RunAudioELF = "_RUNNING";
+        private static string ShiftAudioELF = "_SHIFTING";
 
         private void OnEnable()
         {
@@ -40,6 +47,7 @@ namespace Player
             _bodyTransform = GetComponent<Transform>();
             _rb = GetComponent<Rigidbody>();
             _playerControls = GetComponent<PlayerControls>();
+            _audio = GetComponent<SoundManager>();
 
             _playerControls.OnMove += HandleMove;
             _playerControls.OnLook += HandleLook;
@@ -50,6 +58,12 @@ namespace Player
         {
             var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
             _torchAnimator.SetFloat("hostVelocity", totalVelocity);
+
+            if(totalVelocity <= 0.001f)
+            {
+                _audio.StopELF(RunAudioELF);
+                _audio.StopELF(ShiftAudioELF);
+            }
         }
 
         private void OnDestroy()
@@ -86,7 +100,14 @@ namespace Player
             if (!isShifting)
             {
                 OnStep?.Invoke(_bodyTransform);
+
+                _audio.StopELF(RunAudioELF);
+                _audio.PlayELF(ShiftAudioELF, "Shift");
+                return;
             }
+
+            _audio.StopELF(ShiftAudioELF);
+            _audio.PlayELF(RunAudioELF, "Run");
         }
 
         /// <summary>
@@ -101,6 +122,11 @@ namespace Player
         {
             _isProtecting = isProtecting;
             _torchAnimator.SetBool("hostIsUsing", isProtecting);
+
+            if (isProtecting)
+            {
+                _torch.Audio.PlayRandom("Use");
+            }
         }
 
         /// <summary>

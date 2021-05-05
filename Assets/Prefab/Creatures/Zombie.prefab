@@ -1928,8 +1928,12 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 113f90509e22b485080f8eff26060cbf, type: 3}
   - Name: Ambient
     ClipsStack:
+    - {fileID: 8300000, guid: 806315b7c4d3947c2b4c591284cc6b7e, type: 3}
     - {fileID: 8300000, guid: ce0b971b352814a399180c02e0433a11, type: 3}
+    - {fileID: 8300000, guid: e4ccf77a934804520912939566972857, type: 3}
+    - {fileID: 8300000, guid: 9ae194c96f2c84aea8d109cf710c5816, type: 3}
     - {fileID: 8300000, guid: 5e251f99d41fd489b9cb1b25da06e077, type: 3}
+    - {fileID: 8300000, guid: 3833d0c30ae1543f28a9c1c5e4dae4bb, type: 3}
   - Name: Attack
     ClipsStack:
     - {fileID: 8300000, guid: 758bda16eeaa84c1bb39e5a550770f9b, type: 3}
@@ -1937,14 +1941,6 @@ MonoBehaviour:
     ClipsStack:
     - {fileID: 8300000, guid: 341f64eb50e9e4e10b692d9fc2b1e19b, type: 3}
     - {fileID: 8300000, guid: 8fde35c224eb048c2befe04174c078b5, type: 3}
-  - Name: Investigate
-    ClipsStack:
-    - {fileID: 8300000, guid: 806315b7c4d3947c2b4c591284cc6b7e, type: 3}
-    - {fileID: 8300000, guid: 3833d0c30ae1543f28a9c1c5e4dae4bb, type: 3}
-  - Name: Screamers
-    ClipsStack:
-    - {fileID: 8300000, guid: e4ccf77a934804520912939566972857, type: 3}
-    - {fileID: 8300000, guid: 9ae194c96f2c84aea8d109cf710c5816, type: 3}
 --- !u!1 &5489405583644931023
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,7 @@ torch implementation:
 
 sound effects:
 
-[  ] connect manager to actions
+[x] connect sound managers to various actions
 [  ] cashier random speeches (x3)
 
 hub:

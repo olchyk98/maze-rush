@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3755452730929714213}
+  - component: {fileID: 4855165440211522154}
+  - component: {fileID: 2107147595583973300}
   m_Layer: 0
   m_Name: FX
   m_TagString: Untagged
@@ -32,6 +34,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4855165440211522154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3085303003669565697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1f886a0f142403bb5329df740e80fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stacks:
+  - Name: Screamers
+    ClipsStack:
+    - {fileID: 8300000, guid: fd0913782b2a24a03b6c78004ec68155, type: 3}
+    - {fileID: 8300000, guid: 4bc7a42c62c6645649d7fa851fb823a6, type: 3}
+  - Name: Ambient
+    ClipsStack:
+    - {fileID: 8300000, guid: c39708776e90b4a9dbbd5b46197ef9b7, type: 3}
+    - {fileID: 8300000, guid: 4a0c49831b4fc48838bcde6532c78f29, type: 3}
+    - {fileID: 8300000, guid: 568e324fba36142d08c534f45c8eb26f, type: 3}
+    - {fileID: 8300000, guid: 0c3df9d3556d94883bbfc892000f3f08, type: 3}
+    - {fileID: 8300000, guid: 5d36d2f4a9acf4e61986e2694774980e, type: 3}
+    - {fileID: 8300000, guid: dc69b9b7849b84de885ca13c197b7ffe, type: 3}
+    - {fileID: 8300000, guid: 1fb479a93c169409fa62503885c3fcfb, type: 3}
+--- !u!114 &2107147595583973300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3085303003669565697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaf6d6d2238284eae951e9153a478312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8397266755137678340
 GameObject:
   m_ObjectHideFlags: 0
