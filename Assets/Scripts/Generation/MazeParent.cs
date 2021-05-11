@@ -200,12 +200,12 @@ namespace Generation
             var start = Vector3.zero;
             var end = new Vector3(_matrixWidth * cellSize.x, _matrixHeight * cellSize.y);
             var hunter = RandomizePosition(new Vector2Int(0, 2));
-            IList<Vector3> items = RandomizeMultiplePositions(Random.Range(1, 4), 0, 4);
+            IList<Vector3> coins = RandomizeMultiplePositions(Random.Range(6, 15), 0, 4);
 
             var positionsStorage = new MazeKeyPositions(
                 player: player,
                 exit: exit,
-                items: items,
+                coins: coins,
                 hunter: hunter,
                 mazeStart: start,
                 mazeEnd: end

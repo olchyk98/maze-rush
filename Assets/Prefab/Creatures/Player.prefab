@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5614854025259303306}
   - component: {fileID: 2380083314251581974}
   - component: {fileID: 8940394048722714961}
+  - component: {fileID: -344667136251576951}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -118,6 +119,19 @@ MonoBehaviour:
   - Name: Shift
     ClipsStack:
     - {fileID: 8300000, guid: 273348191253a4dd2bb9144097fc1114, type: 3}
+--- !u!114 &-344667136251576951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5584163498423608006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201269ec2258a421a94cd86ef9381ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins: 0
 --- !u!1 &5584163499724681424
 GameObject:
   m_ObjectHideFlags: 0
