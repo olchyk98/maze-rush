@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Entities;
 using Universal;
 
@@ -57,23 +59,16 @@ namespace Player
         private void Update()
         {
             var totalVelocity = Mathf.Abs(_rb.velocity.x + _rb.velocity.z);
-            if(_torchAnimator != default)
+            if (_torchAnimator != default)
             {
                 _torchAnimator.SetFloat("hostVelocity", totalVelocity);
             }
 
-            if(totalVelocity <= 0.001f)
+            if (totalVelocity <= 0.001f)
             {
                 _audio.StopELF(RunAudioELF);
                 _audio.StopELF(ShiftAudioELF);
             }
-        }
-
-        private void OnDestroy()
-        {
-            _playerControls.OnMove -= HandleMove;
-            _playerControls.OnLook -= HandleLook;
-            _playerControls.OnProtect -= HandleProtect;
         }
 
         /// <summary>
@@ -173,8 +168,17 @@ namespace Player
             var force = Vector2.right * attackEffect;
 
             _rb.AddForceAtPosition(force, sourceTransform.position, ForceMode.VelocityChange);
-            FireDeathAnimation();
+            StartCoroutine(StartDying());
             return true;
+        }
+
+        private IEnumerator StartDying()
+        {
+            FireDeathAnimation();
+
+            yield return new WaitForSeconds(3.5f);
+
+            SceneManager.LoadScene("HubScene");
         }
 
         /// <summary>

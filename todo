@@ -46,6 +46,13 @@ implement dying:
   [x] teleporting to the hub
   [  ] decreasing number of hearts
 
+storage:
+  [x] money
+  [x] implement money bugs
+  [x] show coins in hub
+  [  ] hearts
+  [  ] reset money/hearts when hearts <= 0
+
 menu:
 
 [  ] play

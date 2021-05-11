@@ -11,6 +11,7 @@ namespace Entities
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject exitPrefab;
         [SerializeField] private GameObject hunterPrefab;
+        [SerializeField] private GameObject coinPrefab;
         [SerializeField] private GameObject navFieldPrefab;
 
         private Transform _transform;
@@ -28,6 +29,18 @@ namespace Entities
         public void SpawnExit(MazeKeyPositions positions)
         {
             Instantiate(exitPrefab, positions.Exit, Quaternion.identity);
+        }
+
+        public void SpawnCoins(MazeKeyPositions positions)
+        {
+            const float y = 1f;
+
+            foreach(Vector3 p in positions.Coins)
+            {
+                var position = new Vector3(p.x, y, p.z);
+
+                Instantiate(coinPrefab, position, Quaternion.identity);
+            }
         }
 
         public void SpawnHunter(MazeKeyPositions positions)
