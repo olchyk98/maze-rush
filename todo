@@ -1,4 +1,3 @@
-[  ] rename HunterMovement to HunterBehaviour / HunterBrain
 [x] listening does not work
 [x] player apply force on hit
 [x] shifting
@@ -6,6 +5,15 @@
 [x] hunter movement animation
 [x] hunter attack animation
 [x] death screen (sepia+GAME_OVER text)
+[  ] implement minimap:
+  We know that exit is always on (maze_width, maze_height).
+  By showing a minimap on the screen with the placed point,
+  we can show that the exit position is predefined.
+  Play should go from cell to cell to fill the minimap.
+  That way he/she can always know where to go and what to explore.
+  Methodology: The hunter's job is to find and kill the player.
+  It's doing that by investigating the maze.
+  Player should do the same thing, but to survive and exit/pass the maze.
 
 torch implementation:
 [x] place in the hand
@@ -22,7 +30,7 @@ sound effects:
 
 hub:
 
-[  ] implement money bug
+[x] implement money bug
 [...] implement shop cashier
 [...] implement shop lots
 
@@ -44,14 +52,14 @@ cutscene:
 
 implement dying:
   [x] teleporting to the hub
-  [  ] decreasing number of hearts
+  [x] decreasing number of hearts
 
 storage:
   [x] money
   [x] implement money bugs
   [x] show coins in hub
-  [  ] hearts
-  [  ] reset money/hearts when hearts <= 0
+  [x] hearts
+  [x] reset money/hearts when hearts <= 0
 
 menu:
 
