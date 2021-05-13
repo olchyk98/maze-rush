@@ -26,8 +26,9 @@ namespace Player
         private PlayerControls _playerControls;
         private SoundManager _audio;
 
+        private bool _isProtecting;
+        private bool _isDead;
         private float _rotationY;
-        private bool _isProtecting = false;
         private const float SpeedMultiplier = 100f;
 
         private static int AnimationCameraDiesHash = Animator.StringToHash("PlayerCameraDies");
@@ -54,6 +55,9 @@ namespace Player
             _playerControls.OnMove += HandleMove;
             _playerControls.OnLook += HandleLook;
             _playerControls.OnProtect += HandleProtect;
+
+            _isDead = false;
+            _isProtecting = false;
         }
 
         private void Update()
@@ -163,11 +167,13 @@ namespace Player
         /// </returns>
         public bool ApplyHit(Transform sourceTransform, float attackEffect)
         {
-            if (_isProtecting) return false;
+            if (_isProtecting || _isDead) return false;
 
             var force = Vector2.right * attackEffect;
 
             _rb.AddForceAtPosition(force, sourceTransform.position, ForceMode.VelocityChange);
+
+            _isDead = true;
             StartCoroutine(StartDying());
             return true;
         }
@@ -178,7 +184,14 @@ namespace Player
 
             yield return new WaitForSeconds(3.5f);
 
+            HandleLifesDecrease();
             SceneManager.LoadScene("HubScene");
+        }
+
+        private void HandleLifesDecrease()
+        {
+            int playerLifes = PlayerPrefs.GetInt("PlayerLifes");
+            PlayerPrefs.SetInt("PlayerLifes", playerLifes - 1);
         }
 
         /// <summary>
