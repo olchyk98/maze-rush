@@ -63,9 +63,8 @@ storage:
 
 menu:
 
-[  ] play
-[  ] settings (graphics, sounds volume, go to menu)
-[  ] exit
+[x] play
+[x] exit
 
 ready for production:
 

@@ -66,7 +66,7 @@ MonoBehaviour:
   _cameraTransform: {fileID: 5584163499724681428}
   _torchAnimator: {fileID: 1842235778740544936}
   _torch: {fileID: 5278368903760278225}
-  _mouseSensitivity: 8.2
+  _mouseSensitivity: 5
   _movementSpeed: 6.8
 --- !u!114 &5614854025259303306
 MonoBehaviour:
@@ -131,7 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 201269ec2258a421a94cd86ef9381ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coins: 0
 --- !u!1 &5584163499724681424
 GameObject:
   m_ObjectHideFlags: 0

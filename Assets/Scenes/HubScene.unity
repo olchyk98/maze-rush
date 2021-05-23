@@ -8495,7 +8495,7 @@ MonoBehaviour:
   _cameraTransform: {fileID: 5584163499374937817}
   _torchAnimator: {fileID: 0}
   _torch: {fileID: 0}
-  _mouseSensitivity: 8.2
+  _mouseSensitivity: 5
   _movementSpeed: 6.8
 --- !u!54 &2380083315210484763
 Rigidbody:
